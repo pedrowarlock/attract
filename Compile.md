@@ -27,14 +27,12 @@ distributions.  Other distributions should have similar packages available.
       - OpenGL and GLU (or OpenGLES for GLES version)
       - JPEG library
       - Make and Package Config
-      - Xrandr
 
    * Optional:
       - Fontconfig (to assist with finding fonts).
       - Xinerama (for multiple monitor support).
       - libarchive (for .7z, .rar, .tar.gz and .tar.bz2 archive support).
       - Libcurl (for network info/artwork scraping).
-      - Libdw, libbfd or libdwarf (for a pretty stack trace if we crash).
 
 2. Extract the Attract-Mode source to your system.
 
@@ -119,14 +117,14 @@ OS X.
 1. Follow the steps in the mxe tutorial to set up mxe on your system:
    <http://mxe.cc/#tutorial>
 
-2. Make mxe's sfml, ffmpeg, libarchive and curl packages:
+2. Make mxe's sfml, ffmpeg and libarchive packages:
 
-           make ffmpeg sfml libarchive curl
+           make ffmpeg sfml libarchive
 
-   the above command will make 32-bit versions of ffmpeg, sfml, libarchive and curl
-   (and anything else that they depend on). To make the 64-bit version use the following:
+   the above command will make 32-bit versions of ffmpeg and sfml (and anything
+   else that they depend on). To make the 64-bit version use the following:
 
-           make MXE_TARGETS='x86_64-w64-mingw32.static' ffmpeg sfml libarchive curl
+           make MXE_TARGETS='x86_64-w64-mingw32.static' ffmpeg sfml libarchive
 
 3. Extract the Attract-Mode source to your system.
 
@@ -158,7 +156,7 @@ Windows (native compile):
 
            pacman -Syu
 
-4. Install required packages. (optionally use the mingw-w64-i686-toolchain
+4. Install required packaged. (optionally use the mingw-w64-i686-toolchain
    instead for 32-bit windows architectures), install "all" (by default) :
 
            pacman -S git mingw-w64-x86_64-toolchain msys/make mingw64/mingw-w64-x86_64-sfml mingw64/mingw-w64-x86_64-ffmpeg mingw64/mingw-w64-x86_64-libarchive
