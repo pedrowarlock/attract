@@ -599,6 +599,10 @@ int main(int argc, char *argv[])
 			//
 			FeDebug() << "Handling command: " << FeInputMap::commandStrings[c] << std::endl;
 
+			int coins = feSettings.get_coins();
+			int temp_for_coins = feSettings.get_tempo_por_ficha();
+			bool result = ((coins * temp_for_coins) >= temp_for_coins)? true : false;
+
 			soundsys.sound_event( c );
 			if ( feVM.handle_event( c ) )
 				redraw = true;
@@ -631,7 +635,9 @@ int main(int argc, char *argv[])
 					break;
 
 				case FeInputMap::Select:
-					launch_game=true;
+					if (result){
+						launch_game=true;
+					}
 					break;
 
 				case FeInputMap::ToggleMute:
