@@ -411,7 +411,7 @@ bool scummvm_build( FeImporterContext &c )
 				FeEmulatorInfo::Working_dir ), true );
 
 	std::string output;
-	run_program( base_command, "-t", work_dir, scummvm_cb, &output );
+	run_program(base_command, "-t", work_dir, scummvm_cb, &output );
 
 	size_t pos( 0 );
 	int line_count=0;

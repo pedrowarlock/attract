@@ -25,6 +25,7 @@
 #include "fe_settings.hpp"
 #include "fe_window.hpp"
 #include "fe_present.hpp"
+#include "fe_config.hpp"
 
 #ifdef SFML_SYSTEM_WINDOWS
 #define WIN32_LEAN_AND_MEAN
@@ -461,6 +462,8 @@ bool FeWindow::run()
 	run_program_options_class opt;
 	opt.exit_hotkey = emu->get_info( FeEmulatorInfo::Exit_hotkey );
 	opt.pause_hotkey = emu->get_info( FeEmulatorInfo::Pause_hotkey );
+	opt.coin_hotkey = emu->get_info( FeEmulatorInfo::Coin_hotkey );
+
 	opt.joy_thresh = m_fes.get_joy_thresh();
 	opt.launch_cb = (( nbm_wait <= 0 ) ? launch_callback : NULL );
 	opt.wait_cb = wait_callback;
@@ -524,6 +527,9 @@ bool FeWindow::run()
 			NULL,
 			( nbm_wait <= 0 ), // don't block if nbm_wait > 0
 			&opt );
+
+			
+			
 	}
 
 	if ( opt.running_pid != 0 )

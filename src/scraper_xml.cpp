@@ -104,7 +104,7 @@ bool FeXMLParser::parse_internal(
 	XML_SetElementHandler( ud.parser, exp_start_element, exp_end_element );
 	XML_SetCharacterDataHandler( ud.parser, exp_handle_data );
 
-	run_program( prog, args, work_dir, my_parse_callback, (void *)&ud );
+	run_program(prog, args, work_dir, my_parse_callback, (void *)&ud );
 
 	// need to pass true to XML Parse on last line
 	XML_Parse( ud.parser, 0, 0, XML_TRUE );

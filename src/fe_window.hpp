@@ -26,7 +26,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 class FeSettings;
-
+class FeInputSelMenu;
 class FeWindow
 {
 	friend void launch_callback( void *o );

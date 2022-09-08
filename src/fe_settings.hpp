@@ -170,11 +170,11 @@ private:
 	std::string m_default_font;
 	std::string m_exit_command;
 	std::string m_exit_message;
-		std::string m_creditpcoin;
-	std::string m_creditos;
+		int m_creditpcoin;
+	int m_creditos;
 	std::string m_coinName;
 	std::string m_timename;
-	std::string m_tempoporcoin;
+	int m_tempoporcoin;
 	std::string m_ocioso;
 	std::string m_exit_question;
 	std::string m_language;
@@ -379,11 +379,11 @@ public:
 	void set_search_rule( const std::string &rule );
 	const std::string &get_search_rule() const;
 
-	const std::string &get_coins() const;
-	const std::string &get_creditos_por_fichas() const;
-	const std::string &get_tempo_por_ficha() const;
+	const int get_coins() const;
+	const int get_creditos_por_fichas() const;
+	const int get_tempo_por_ficha() const;
 	const std::string &get_tempo_ocioso() const;
-	void set_coin( const std::string coin );
+	void set_coin( const int coin );
 
 	bool switch_to_clone_group( int index = -1 ); // set index to the index of the clone to select.  -1=default
 	bool switch_from_clone_group();

@@ -30,6 +30,8 @@
 #include <squirrel.h>
 #include <sqstdstring.h>
 
+
+
 const char *FE_STAT_FILE_EXTENSION = ".stat";
 const char FE_TAGS_SEP = ';';
 
@@ -868,6 +870,7 @@ const char *FeEmulatorInfo::indexStrings[] =
 	"nb_mode_wait",
 	"exit_hotkey",
 	"pause_hotkey",
+	"coin_hotkey",
 	NULL
 };
 
@@ -885,6 +888,7 @@ const char *FeEmulatorInfo::indexDispStrings[] =
 	"Non-Blocking Mode Wait",
 	"Exit Hotkey",
 	"Pause Hotkey",
+	"Coin Hotkey",
 	NULL
 };
 
@@ -941,6 +945,8 @@ const std::string FeEmulatorInfo::get_info( int i ) const
 		return m_exit_hotkey;
 	case Pause_hotkey:
 		return m_pause_hotkey;
+	case Coin_hotkey:
+		return m_coin_hotkey;
 	default:
 		return "";
 	}
@@ -1008,6 +1014,11 @@ void FeEmulatorInfo::set_info( enum Index i, const std::string &s )
 		m_pause_hotkey = s;
 #endif
 		break;
+	case Coin_hotkey:
+#if !defined(NO_COIN_HOTKEY)
+	m_coin_hotkey = s;
+#endif
+	break;
 	default:
 		break;
 	}

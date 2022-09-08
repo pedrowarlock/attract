@@ -1041,25 +1041,15 @@ bool FePresent::handle_event( FeInputMap::Command c )
 		m_feSettings->toggle_layout();
 		load_layout();
 		break;
-	case FeInputMap::coin:
+	case FeInputMap::InsertCoin:
 		{
-			std::ostringstream os;
-			std::string text1 =	m_feSettings->get_coins();
-			std::string text2 =	m_feSettings->get_creditos_por_fichas();
-			int Credit,Credit_for_coin,result;
-			std::istringstream iss1 (text1);
-			std::istringstream iss2 (text2);
-			iss1 >> Credit;
-			iss2 >> Credit_for_coin;
-			result = Credit + Credit_for_coin;
-			os << result;
-			m_feSettings->set_coin( os.str() );
+			int Credit = m_feSettings->get_coins();
+			int Credit_for_coin = m_feSettings->get_creditos_por_fichas();
+			m_feSettings->set_coin( Credit + Credit_for_coin);
 			
-			//set_info( FeSettings::Creditos, os.str() );
-			
-			
+			//set_info( FeSettings::Creditos, os.str() );	
+
 			//Info
-			std::cout << "RESULT: " << os.str() << "\n";
 			std::cout << "FICHAS: " << m_feSettings->get_coins() << "\n";
 			std::cout << "Credito Por Fichas: " << m_feSettings->get_creditos_por_fichas() << "\n";
 			std::cout << "Tempo por fichas: " << m_feSettings->get_tempo_por_ficha() << "\n";

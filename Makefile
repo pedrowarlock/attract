@@ -85,7 +85,7 @@ WINDRES=windres
 
 -include attract.mk
 
-OPTIMIZE ?= 2
+OPTIMIZE ?= 8
 
 ifndef VERBOSE
  SILENT = @
@@ -497,7 +497,7 @@ else
  SQUIRREL += $(OBJ_DIR)/libgameswf.a
 endif
 
-$(info flags: $(CXXFLAGS) $(CPPFLAGS) $(FE_FLAGS))
+#$(info flags: $(CXXFLAGS) $(CPPFLAGS) $(FE_FLAGS))
 
 OBJ = $(patsubst %,$(OBJ_DIR)/%,$(_OBJ))
 DEP = $(patsubst %,$(SRC_DIR)/%,$(_DEP))

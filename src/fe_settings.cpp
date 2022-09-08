@@ -1116,23 +1116,23 @@ const std::string &FeSettings::get_search_rule() const
 	return m_current_search_str;
 }
 
-void FeSettings::set_coin( const std::string coin )
+void FeSettings::set_coin( int coin )
 {
 	m_creditos = coin;
 }
 
-const std::string &FeSettings::get_coins() const
+const int FeSettings::get_coins() const
 {
 	return m_creditos;
 }
 
 
-const std::string &FeSettings::get_creditos_por_fichas() const
+const int FeSettings::get_creditos_por_fichas() const
 {
 	return m_creditpcoin;
 }
 
-const std::string &FeSettings::get_tempo_por_ficha() const
+const int FeSettings::get_tempo_por_ficha() const
 {
 	return m_tempoporcoin;
 }
@@ -2640,25 +2640,18 @@ void FeSettings::do_text_substitutions_absolute( std::string &str, int filter_in
 			break;
 			case 15: // "CoinSystem"
 			{
-				std::string text1 = m_tempoporcoin;
-				std::string text2 =	m_creditos;
-				int TempForCoin,Credit,result;
-				std::istringstream iss1 (text1);
-				std::istringstream iss2 (text2);
 				std::ostringstream os;
-				iss1 >> TempForCoin;
-				iss2 >> Credit;
 			
 				if ( get_current_display_mode().compare( "yes" ) == 0 ) {
-					os << std::setw(2) << std::setfill('0') << (Credit);
+					os << std::setw(2) << std::setfill('0') << (m_creditos);
 					rep = os.str();
 				}else{
-					if((TempForCoin * Credit)>=3600000)//mostra acima de 1 hora
-						os << std::setw(2) << std::setfill('0') << ((TempForCoin * Credit)/3600000) << ":" << std::setw(2) << std::setfill('0') << (((TempForCoin * Credit) % 3600000)/60000) << ":" << std::setw(2) << std::setfill('0') << ((((TempForCoin * Credit) % 3600000) % 60000) / 1000 );
-					else if (((TempForCoin * Credit) < 3600000) && ((TempForCoin * Credit) >=60000))//mostra abaixo de 1 hora
-						os << "00:" << std::setw(2) << std::setfill('0') << ((TempForCoin * Credit)/60000) << ":" << std::setw(2) << std::setfill('0') << (((TempForCoin * Credit)%60000) / 1000);
+					if((m_tempoporcoin * m_creditos)>=3600000)//mostra acima de 1 hora
+						os << std::setw(2) << std::setfill('0') << ((m_tempoporcoin * m_creditos)/3600000) << ":" << std::setw(2) << std::setfill('0') << (((m_tempoporcoin * m_creditos) % 3600000)/60000) << ":" << std::setw(2) << std::setfill('0') << ((((m_tempoporcoin * m_creditos) % 3600000) % 60000) / 1000 );
+					else if (((m_tempoporcoin * m_creditos) < 3600000) && ((m_tempoporcoin * m_creditos) >=60000))//mostra abaixo de 1 hora
+						os << "00:" << std::setw(2) << std::setfill('0') << ((m_tempoporcoin * m_creditos)/60000) << ":" << std::setw(2) << std::setfill('0') << (((m_tempoporcoin * m_creditos)%60000) / 1000);
 					else //mostra abaixo de 1 minuto
-						os << "00:00:" << std::setw(2) << std::setfill('0') << ((TempForCoin * Credit)/1000);
+						os << "00:00:" << std::setw(2) << std::setfill('0') << ((m_tempoporcoin * m_creditos)/1000);
 					
 					rep = os.str();
 				}
@@ -2928,13 +2921,13 @@ const std::string FeSettings::get_info( int index ) const
 	case ThegamesdbKey:
 		return m_tgdb_key;
 	case CreditoPorFicha:
-		return m_creditpcoin;
+		return as_str(m_creditpcoin);
 	case TempoPorFicha:
-		return m_tempoporcoin;
+		return as_str(m_tempoporcoin);
 	case Ocioso:
 		return m_ocioso;
 	case Creditos:
-		return m_creditos;
+		return as_str(m_creditos);
 	case CoinName:
 		return m_coinName;
 	case TimeName:
@@ -3233,11 +3226,11 @@ bool FeSettings::set_info( int index, const std::string &value )
 		break;
 
 	case CreditoPorFicha:
-		m_creditpcoin =  value;
+		m_creditpcoin =  as_int(value);
 		break;
 		
 	case TempoPorFicha:
-		m_tempoporcoin =  value;
+		m_tempoporcoin =  as_int(value);
 		break;
 	
 	case Ocioso:
@@ -3245,7 +3238,7 @@ bool FeSettings::set_info( int index, const std::string &value )
 		break;
 	
 	case Creditos:
-		m_creditos =  "0";
+		m_creditos =  0;
 			break;
 	
 	case CoinName:

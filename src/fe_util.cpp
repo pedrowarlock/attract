@@ -823,13 +823,15 @@ namespace
 		const FeInputMapEntry &hotkey )
 
 	{
+		
+		
 		const int TIMEOUT_MS = 5000;
 
 		// Check for key down
 		//
 		if ( !hotkey.get_current_state( opt->joy_thresh ) )
 			return false;
-
+			
 		// If down, wait for key release (or timeout)
 		//
 		sf::Clock t;
@@ -873,12 +875,23 @@ void windows_wait_process(
 
 	FeInputMapEntry exit_is( opt->exit_hotkey );
 	FeInputMapEntry pause_is( opt->pause_hotkey );
+	FeInputMapEntry coin_is( opt->coin_hotkey );
+	
 
 	bool keep_wait=true;
 	bool TimeOutPay = false;
 	int  TimeGetPlay= 60000;
+	long int before = GetTickCount(), after = 0;
+	
 	while (keep_wait)
 	{
+		// if (((GetTickCount() - before) / 1000) != after) 
+			// FeLog() << " - TEMPO: " << after << std::endl;
+
+		// FeLog() << "Teste " << opt << std::endl;		
+
+		after =  (GetTickCount() - before) / 1000;
+
 		switch (MsgWaitForMultipleObjects(1, &hProcess,
 						FALSE, timeout, QS_ALLINPUT ))
 		{
@@ -934,6 +947,10 @@ void windows_wait_process(
 				opt->running_pid = dwProcessId;
 
 				keep_wait=false;
+			}else if ( process_check_for_hotkey( opt, coin_is ) )
+			{
+				FeLog() << " - Adicionou ficha " << std::endl;
+				// m_feSettings->set_coin( "10".str() );
 			}
 			break;
 
@@ -1047,7 +1064,8 @@ void unix_wait_process( unsigned int pid, run_program_options_class *opt )
 }
 #endif
 
-bool run_program( const std::string &prog,
+bool run_program(
+	const std::string &prog,
 	const std::string &args,
 	const std::string &cwork_dir,
 	output_callback_fn callback,
@@ -1055,7 +1073,7 @@ bool run_program( const std::string &prog,
 	bool block,
 	run_program_options_class *opt )
 {
-
+	
 	std::string work_dir = cwork_dir;
 	if ( work_dir.empty() )
 	{
@@ -1106,7 +1124,8 @@ bool run_program( const std::string &prog,
 	GetCurrentDirectoryW( current_wd_len, current_wd );
 	SetCurrentDirectoryW( widen( work_dir ).c_str() );
 
-	bool ret = CreateProcessW( NULL,
+	bool ret = CreateProcessW(
+		NULL,
 		cmdline,
 		NULL,
 		NULL,
@@ -1200,7 +1219,7 @@ bool run_program( const std::string &prog,
 		opt->launch_cb( opt->launch_opaque );
 
 	if ( block && ( NULL == callback ))
-		windows_wait_process( pi.hProcess, pi.dwProcessId, opt );
+		windows_wait_process(pi.hProcess, pi.dwProcessId, opt );
 
 	CloseHandle( pi.hProcess );
 	CloseHandle( pi.hThread );

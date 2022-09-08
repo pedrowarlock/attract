@@ -166,7 +166,7 @@ public:
 		Custom4,
 		Custom5,
 		Custom6,
-		coin,
+		InsertCoin,
 		LAST_COMMAND,
 
 		//

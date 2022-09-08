@@ -31,6 +31,8 @@
 #include <cassert>
 #endif
 
+
+
 #define FE_VERSION_INT( a, b, c ) ((a)<<16 | (b)<<8 | (c))
 #define SFML_VERSION_INT FE_VERSION_INT( SFML_VERSION_MAJOR, SFML_VERSION_MINOR, SFML_VERSION_PATCH )
 
@@ -108,6 +110,9 @@ public:
 	//					(use empty for no hotkey checking)
 	std::string pause_hotkey;
 
+
+	std::string coin_hotkey;
+
 	// [out] "running_pid" - process id of the still running process (if pause hotkey pressed)
 	// [out] "running_wnd" - window handle of the still running process (if pause hotkey pressed)
 	unsigned int running_pid;
@@ -136,7 +141,8 @@ public:
 //
 //	Returns true if program ran successfully
 //
-bool run_program( const std::string &prog,
+bool run_program(
+	const std::string &prog,
 	const std::string &args,
 	const std::string &work_dir,
 	output_callback_fn cb = NULL,

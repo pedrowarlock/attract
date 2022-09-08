@@ -31,7 +31,6 @@
 extern const char *FE_STAT_FILE_EXTENSION;
 extern const char FE_TAGS_SEP;
 struct SQRex;
-
 //
 // Class for storing information regarding a specific rom
 //
@@ -307,6 +306,7 @@ private:
 //
 #if defined(USE_DRM) || defined(SFML_SYSTEM_MACOS)
  #define NO_PAUSE_HOTKEY
+ #define NO_COIN_HOTKEY
 #endif
 
 #if defined(USE_DRM)
@@ -334,6 +334,7 @@ public:
 		NBM_wait,	// non-blocking mode wait time (in seconds)
 		Exit_hotkey,
 		Pause_hotkey,
+		Coin_hotkey,
 		LAST_INDEX
 	};
 
@@ -408,6 +409,7 @@ private:
 	std::string m_workdir;
 	std::string m_exit_hotkey;
 	std::string m_pause_hotkey;
+	std::string m_coin_hotkey;
 
 	std::vector<std::string> m_paths;
 	std::vector<std::string> m_extensions;

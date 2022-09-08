@@ -244,6 +244,10 @@ void FeEmulatorEditMenu::get_options( FeConfigContext &ctx )
 			if ( i == (int)FeEmulatorInfo::Pause_hotkey )
 				continue;
 #endif
+#if defined(NO_COIN_HOTKEY)
+			if ( i == (int)FeEmulatorInfo::Coin_hotkey )
+				continue;
+#endif
 			std::string help( "_help_emu_" );
 			help += FeEmulatorInfo::indexStrings[i];
 
@@ -257,7 +261,7 @@ void FeEmulatorEditMenu::get_options( FeConfigContext &ctx )
 				ctx.back_opt().append_vlist( FeEmulatorInfo::infoSourceStrings );
 			}
 			else if (( i == FeEmulatorInfo::Exit_hotkey )
-					|| ( i == FeEmulatorInfo::Pause_hotkey ))
+					|| ( i == FeEmulatorInfo::Pause_hotkey|| ( i == FeEmulatorInfo::Coin_hotkey  )))
 			{
 				ctx.add_optl( Opt::RELOAD,
 						FeEmulatorInfo::indexDispStrings[i],
@@ -372,6 +376,10 @@ bool FeEmulatorEditMenu::on_option_select(
 #endif
 #if defined(NO_PAUSE_HOTKEY)
 				if ( i == (int)FeEmulatorInfo::Pause_hotkey )
+					continue;
+#endif
+#if defined(NO_COIN_HOTKEY)
+				if ( i == (int)FeEmulatorInfo::Coin_hotkey )
 					continue;
 #endif
 				m_emulator->set_info( (FeEmulatorInfo::Index)i,
@@ -508,6 +516,10 @@ bool FeEmulatorEditMenu::save( FeConfigContext &ctx )
 #endif
 #if defined(NO_PAUSE_HOTKEY)
 		if ( i == (int)FeEmulatorInfo::Pause_hotkey )
+			continue;
+#endif
+#if defined(NO_COIN_HOTKEY)
+		if ( i == (int)FeEmulatorInfo::Coin_hotkey )
 			continue;
 #endif
 		m_emulator->set_info( (FeEmulatorInfo::Index)i,
@@ -1630,11 +1642,16 @@ void FeInputSelMenu::get_options( FeConfigContext &ctx )
 	ctx.fe_settings.get_input_mappings( m_mappings );
 
 	std::vector < FeMapping >::iterator it;
+	//FeLog() << " DO CONFIG: " << m_mappings[45].input_list[0] << std::endl;
+	//FeLog() << " DO CONFIG: " << FeInputSelMenu::m_mappings[45].input_list[0] << std::endl;
+	
+
 	for ( it=m_mappings.begin(); it != m_mappings.end(); ++it )
 	{
 		std::string value, orstr;
 		ctx.fe_settings.get_resource( "OR", orstr );
 		std::vector < std::string >::iterator iti;
+		
 		for ( iti=(*it).input_list.begin(); iti != (*it).input_list.end(); ++iti )
 		{
 			if ( iti > (*it).input_list.begin() )
@@ -1651,9 +1668,12 @@ void FeInputSelMenu::get_options( FeConfigContext &ctx )
 		// Show the default action in brackets beside the UI controls (up/down/left...etc)
 		//
 		std::string name = FeInputMap::commandDispStrings[(*it).command];
+			
+				
 		if ( (*it).command < FeInputMap::Select )
 		{
 			FeInputMap::Command c = ctx.fe_settings.get_default_command( (*it).command );
+		
 			if ( c != FeInputMap::LAST_COMMAND )
 			{
 				name += " (";
@@ -2042,11 +2062,6 @@ void FeMiscMenu::get_options( FeConfigContext &ctx )
 	ctx.back_opt().append_vlist( decoders );
 
 	ctx.add_optl( Opt::EDIT,
-			"Default Coin Name",
-			ctx.fe_settings.get_info( FeSettings::CoinName ),
-			"" );		
-
-	ctx.add_optl( Opt::EDIT,
 			"Image Cache Size",
 			ctx.fe_settings.get_info( FeSettings::ImageCacheMBytes ),
 			"_help_image_cache_mbytes" );
@@ -2151,23 +2166,23 @@ bool FeMiscMenu::save( FeConfigContext &ctx )
 
 	//WARLOCK
 	ctx.fe_settings.set_info( FeSettings::CoinName,
-			ctx.opt_list[14].get_value() );	
+			ctx.opt_list[i++].get_value() );	
 			
 	ctx.fe_settings.set_info( FeSettings::TimeName,
-			ctx.opt_list[15].get_value() );
+			ctx.opt_list[i++].get_value() );
 			
 	ctx.fe_settings.set_info( FeSettings::CreditoPorFicha,
-			ctx.opt_list[16].get_value() );
+			ctx.opt_list[i++].get_value() );
 	
 	ctx.fe_settings.set_info( FeSettings::TempoPorFicha,
-			ctx.opt_list[17].get_value() );
+			ctx.opt_list[i++].get_value() );
 	
 	ctx.fe_settings.set_info( FeSettings::Ocioso,
-			ctx.opt_list[18].get_value() );
+			ctx.opt_list[i++].get_value() );
 				
 	
 	ctx.fe_settings.set_info( FeSettings::Creditos,
-			ctx.opt_list[19].get_value() );
+			ctx.opt_list[i++].get_value() );
 
 #ifdef SFML_SYSTEM_WINDOWS
 	ctx.fe_settings.set_info( FeSettings::HideConsole,
