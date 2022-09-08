@@ -637,7 +637,9 @@ int main(int argc, char *argv[])
 				case FeInputMap::Select:
 					if (result){
 						launch_game=true;
+						break;
 					}
+					soundsys.sound_event(FeInputMap::Custom6 );	
 					break;
 
 				case FeInputMap::ToggleMute:
